@@ -29,12 +29,12 @@ h1 {
     max-width: 600px;
     margin: 40px auto;
     
-    border: 1px solid #ddd; /* light gray border */
-    border-radius: 10px; /* rounded corners */
-    padding: 20px; /* add some padding for breathing room */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding-block: 20px; /* top/bottom */
+    padding-inline: 5px; /* left/right */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 
 
 
