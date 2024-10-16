@@ -25,17 +25,23 @@ h1 {
     user-select: none; /* Standard syntax */
 }
 
+/* Default styles */
 .todo-list {
     max-width: 600px;
     margin: 40px auto;
     
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding-block: 20px; /* top/bottom */
-    padding-inline: 5px; /* left/right */
+    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Mobile-specific styles */
+@media only screen and (max-width: 768px) {
+    .todo-list {
+        margin: 20px 5px; /* Add 5px margin on left/right */
+    }
+}
 
 
 .todo-item:hover {
