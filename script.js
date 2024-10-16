@@ -3,7 +3,7 @@ $(document).ready(function() {
     loadHeading();
     var holdTimeout;
     var startTime;
-    var longPress = 1000; // 1 second
+    var longPress = 500; // 0.5 seconds
 
     // Add task on enter key press
     $('#todo-input').keypress(function(e) {
