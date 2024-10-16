@@ -13,13 +13,36 @@ h1 {
 }
 
 .todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    display: block;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 15px 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
+
+
+
+.todo-item:hover {
+    background-color: #f2f2f2;
+}
+
+#reset-btn, #add-btn {
+    background-color: #D2B48C; /* Tan color */
+    color: #333; /* Dark text color */
+    border: none; /* Remove default border */
+   
+    cursor: pointer; /* Pointer cursor */
+}
+
+#reset-btn:hover, #add-btn:hover {
+    background-color: #F5DEB3; /* Lighter tan on hover */
+}
 
 
 /* Make reset button full width */
