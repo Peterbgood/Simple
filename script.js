@@ -1,6 +1,7 @@
 $(document).ready(function() {
     loadTasks();
     loadHeading();
+    var holdTimeout;
 
     // Add task on enter key press
     $('#todo-input').keypress(function(e) {
@@ -13,7 +14,16 @@ $(document).ready(function() {
     $('#add-btn').click(addTask);
 
     // Delete task on long press
-    $(document).on('contextmenu', '.todo-item', deleteTask);
+    $(document).on('mousedown', '.todo-item', function(e) {
+        var $this = $(this);
+        holdTimeout = setTimeout(function() {
+            deleteTask($this);
+        }, 1000); // 1 second hold
+    });
+
+    $(document).on('mouseup', '.todo-item', function() {
+        clearTimeout(holdTimeout);
+    });
 
     // Move task up on double tap
     $(document).on('dblclick', '.todo-item', moveTaskUp);
@@ -47,9 +57,8 @@ $(document).ready(function() {
         }
     }
 
-    function deleteTask(e) {
-        e.preventDefault();
-        $(this).remove();
+    function deleteTask($task) {
+        $task.remove();
         saveTasks();
     }
 
