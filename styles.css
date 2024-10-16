@@ -1,0 +1,36 @@
+.todo-list {
+    padding: 10px;
+}
+
+h1.form-control {
+
+  border: none;  
+}
+
+h1 {
+
+    font-weight: 600 !important;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.todo-item:last-child {
+   
+}
+
+/* Make reset button full width */
+#reset-btn {
+    width: 100%;
+}
+
+/* Align buttons */
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
