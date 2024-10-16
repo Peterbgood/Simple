@@ -39,7 +39,7 @@ h1 {
 /* Mobile-specific styles */
 @media only screen and (max-width: 768px) {
     .todo-list {
-        margin: 20px 5px; /* Add 5px margin on left/right */
+        margin: 20px 5px !important; /* Add 5px margin on left/right */
     }
 }
 
