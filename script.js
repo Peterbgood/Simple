@@ -83,7 +83,7 @@ $(document).ready(function() {
     function resetTasks() {
         $('#todo-list').empty();
         localStorage.removeItem('tasks');
-        $('h1').text('To-Do-List'); // Reset h1 content
+        $('h1').text('Max'); // Reset h1 content
         localStorage.removeItem('heading'); // Remove saved heading
     }
 
