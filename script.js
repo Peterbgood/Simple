@@ -16,15 +16,16 @@ $(document).ready(function() {
     $('#add-btn').click(addTask);
 
     // Delete task on long press
-    $(document).on('touchstart', '.todo-item', function(e) {
+    $(document).on('touchstart mousedown', '.todo-item', function(e) {
         var $this = $(this);
         startTime = new Date().getTime();
         holdTimeout = setTimeout(function() {
             deleteTask($this);
         }, longPress);
+        e.preventDefault(); // Prevent text selection
     });
 
-    $(document).on('touchend', '.todo-item', function(e) {
+    $(document).on('touchend mouseup', '.todo-item', function(e) {
         var endTime = new Date().getTime();
         var holdTime = endTime - startTime;
         if (holdTime < longPress) {
@@ -32,7 +33,7 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('touchmove', '.todo-item', function() {
+    $(document).on('touchmove mousemove', '.todo-item', function() {
         clearTimeout(holdTimeout);
     });
 
