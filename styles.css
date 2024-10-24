@@ -1,7 +1,3 @@
-body {
-    overflow-x: hidden;
-}
-
 .todo-list {
     padding: 10px;
 }
@@ -21,7 +17,7 @@ h1 {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin: 5px 0;
+    margin: 10px 0;
     padding: 8px 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     -webkit-user-select: none; /* Safari */
@@ -39,8 +35,6 @@ h1 {
    
 }
 
-
-
 /* Mobile-specific styles */
 @media only screen and (max-width: 768px) {
     .todo-list {
@@ -53,23 +47,35 @@ h1 {
     background-color: #f2f2f2;
 }
 
-#todo-list {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch; /* Change from center to stretch */
-}
-
-#reset-btn, #add-btn {
-    background-color: #D2B48C; /* Tan color */
-    color: #333; /* Dark text color */
+#reset-btn {
+    background-color: #dc3545; /* Tan color */
+    color: #fff; /* Dark text color */
     border: none; /* Remove default border */
    
     cursor: pointer; /* Pointer cursor */
 }
 
-#reset-btn:hover, #add-btn:hover {
-    background-color: #F5DEB3; /* Lighter tan on hover */
+#add-btn {
+    background-color: #007bff; /* Tan color */
+    color: #fff; /* Dark text color */
+    border: none; /* Remove default border */
+   
+    cursor: pointer; /* Pointer cursor */
 }
+
+
+#reset-btn:hover {
+    background-color: #e93f50; /* Lighter tan on hover */
+}
+
+#add-btn:hover {
+    background-color: #1a81f0; /* Tan color */
+    color: #fff; /* Dark text color */
+    border: none; /* Remove default border */
+   
+    cursor: pointer; /* Pointer cursor */
+}
+
 
 
 /* Make reset button full width */
