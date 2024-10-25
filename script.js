@@ -84,14 +84,21 @@ $(document).ready(function() {
         var taskText = $task.find('span').text();
         var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
         $task.find('span').replaceWith(input);
-        input.focus();
+    
+        // Blur any currently focused element before focusing the new input
+        if (document.activeElement) {
+            $(document.activeElement).blur();
+        }
+    
         setTimeout(function() {
-            input.attr('autofocus', true); // Added this line
+            input.attr('autofocus', true);
             input.focus();
             input.click(); // Force keyboard display
             input.select(); // Select text for easier editing
         }, 100);
+    
         editing = true;
+    
         input.on('keypress', function(e) {
             if (e.which === 13) { // Enter key
                 var newText = input.val();
@@ -101,6 +108,7 @@ $(document).ready(function() {
                 input.off('keypress');
             }
         });
+    
         input.blur(function() {
             var newText = input.val();
             input.replaceWith('<span>' + newText + '</span>');
