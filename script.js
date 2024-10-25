@@ -82,12 +82,12 @@ $(document).ready(function() {
 
     function editTask($task) {
         var taskText = $task.find('span').text();
-        var input = $('<input type="text" class="form-control" value="' + taskText + '">');
+        var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
         $task.find('span').replaceWith(input);
-        input.focus();
         setTimeout(function() {
-            input.focus();
-            document.body.click(); // Force keyboard display
+            input[0].focus(); // Force focus on input
+            input[0].click();  // Simulate click for keyboard display
+            input[0].select(); // Select text for easier editing
         }, 100);
         editing = true;
         input.on('keypress', function(e) {
