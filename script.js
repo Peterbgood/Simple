@@ -86,6 +86,7 @@ $(document).ready(function() {
         $task.find('span').replaceWith(input);
         input.focus();
         setTimeout(function() {
+            input.attr('autofocus', true); // Added this line
             input.focus();
             input.click(); // Force keyboard display
             input.select(); // Select text for easier editing
@@ -108,6 +109,7 @@ $(document).ready(function() {
             input.off('blur');
         });
     }
+    
 
     function deleteTask($task) {
         $task.remove();
