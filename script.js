@@ -82,45 +82,30 @@ $(document).ready(function() {
 
     function editTask($task) {
         var taskText = $task.find('span').text();
-        var input = $('<input type="text" class="form-control" value="' + taskText + '">');
+        var editableSpan = $('<span contenteditable="true" class="form-control">' + taskText + '</span>');
         
         // Temporarily hide the delete button
         $task.find('.delete-btn').hide();
     
-        // Replace the span with input
-        $task.find('span').replaceWith(input);
+        // Replace the span with an editable span
+        $task.find('span').replaceWith(editableSpan);
     
-        // Blur the current active element
-        if (document.activeElement) {
-            $(document.activeElement).blur();
-        }
-    
-        // Force focus with a slight delay to ensure it's rendered properly
-        setTimeout(function() {
-            input.attr('autofocus', true);
-            input[0].focus();
-            input[0].click(); // Simulate a click to force keyboard display
-            input[0].setSelectionRange(0, input.val().length); // Select text for easier editing
-        }, 100);
-    
+        editableSpan.focus();
         editing = true;
     
-        input.on('keypress', function(e) {
-            if (e.which === 13) { // Enter key
-                var newText = input.val();
-                input.replaceWith('<span>' + newText + '</span>');
-                saveTasks();
-                editing = false;
-                $task.find('.delete-btn').show(); // Show the delete button again
-            }
-        });
-    
-        input.blur(function() {
-            var newText = input.val();
-            input.replaceWith('<span>' + newText + '</span>');
+        editableSpan.on('blur', function() {
+            var newText = editableSpan.text();
+            editableSpan.replaceWith('<span>' + newText + '</span>');
             saveTasks();
             editing = false;
             $task.find('.delete-btn').show(); // Show the delete button again
+        });
+    
+        editableSpan.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                e.preventDefault(); // Prevent new line in contenteditable
+                editableSpan.blur();
+            }
         });
     }
     
@@ -165,7 +150,7 @@ $(document).ready(function() {
             $.each(storedTasks, function(index, task) {
                 var taskHtml = '<li class="todo-item">' +
                     '<span>' + task.trim() + '</span>' +
-                    '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Delet</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
