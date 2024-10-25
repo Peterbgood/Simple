@@ -95,21 +95,25 @@ $(document).ready(function() {
             input.focus();
             input.click(); // Force keyboard display
             input.select(); // Select text for easier editing
-        }, 100);
+        }, 200); // Adjust delay as needed
     
         editing = true;
     
         input.on('keypress', function(e) {
             if (e.which === 13) { // Enter key
+                e.preventDefault();
                 var newText = input.val();
-                input.replaceWith('<span>' + newText + '</span>');
+                var replacementSpan = $('<span>' + newText + '</span>');
+                input.replaceWith(replacementSpan);
+                replacementSpan.focus(); // Regain focus
                 saveTasks();
                 editing = false;
                 input.off('keypress');
             }
         });
     
-        input.blur(function() {
+        input.on('blur', function(e) {
+            e.preventDefault(); // Prevent keyboard closure
             var newText = input.val();
             input.replaceWith('<span>' + newText + '</span>');
             saveTasks();
