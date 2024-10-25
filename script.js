@@ -86,11 +86,17 @@ $(document).ready(function() {
         $task.find('span').replaceWith(input);
         input.focus();
         editing = true;
+        input.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                var newText = input.val();
+                $task.find('input').replaceWith('<span>' + newText + '</span>');
+                saveTasks();
+                editing = false;
+                input.off('keypress'); // Remove event listener
+            }
+        });
         input.blur(function() {
-            var newText = input.val();
-            $task.find('input').replaceWith('<span>' + newText + '</span>');
-            saveTasks();
-            editing = false;
+            // Remove blur event to prevent saving on click outside
         });
     }
 
