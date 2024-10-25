@@ -1,7 +1,6 @@
 $(document).ready(function() {
     loadTasks();
     loadHeading();
-    var holdTimeout;
     var startTime;
     var longPress = 500; // 0.5 seconds
     var editing = false;
@@ -16,31 +15,31 @@ $(document).ready(function() {
     // Add task on button click
     $('#add-btn').click(addTask);
 
-    // Edit task on long press
+    // Edit task on tap
     $(document).on('touchstart mousedown', '.todo-item', function(e) {
         var $this = $(this);
         startTime = new Date().getTime();
-        holdTimeout = setTimeout(function() {
-            editTask($this);
+        setTimeout(function() {
+            if (!editing) {
+                editTask($this);
+            }
         }, longPress);
         e.preventDefault(); // Prevent text selection
     });
 
-    $(document).on('touchend mouseup', '.todo-item', function(e) {
+    $(document).on('touchend mouseup', function() {
         var endTime = new Date().getTime();
         var holdTime = endTime - startTime;
         if (holdTime < longPress) {
-            clearTimeout(holdTimeout);
+            clearTimeout(editing);
         }
-    });
-
-    $(document).on('touchmove mousemove', '.todo-item', function() {
-        clearTimeout(holdTimeout);
     });
 
     // Move task up on double tap
     $(document).on('dblclick', '.todo-item', function() {
-        moveTaskUp($(this));
+        if (!editing) {
+            moveTaskUp($(this));
+        }
     });
 
     // Delete task on delete button click
@@ -82,35 +81,41 @@ $(document).ready(function() {
 
     function editTask($task) {
         var taskText = $task.find('span').text();
-        var editableSpan = $('<span contenteditable="true" class="form-control">' + taskText + '</span>');
-        
+        var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
+        $task.find('span').replaceWith(input);
+
         // Temporarily hide the delete button
         $task.find('.delete-btn').hide();
-    
-        // Replace the span with an editable span
-        $task.find('span').replaceWith(editableSpan);
-    
-        editableSpan.focus();
+
+        // Blur the current active element
+        if (document.activeElement) {
+            $(document.activeElement).blur();
+        }
+
+        setTimeout(function() {
+            input.attr('autofocus', true).focus().click().select();
+        }, 100);
+
         editing = true;
-    
-        editableSpan.on('blur', function() {
-            var newText = editableSpan.text();
-            editableSpan.replaceWith('<span>' + newText + '</span>');
+
+        input.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                var newText = input.val();
+                input.replaceWith('<span>' + newText + '</span>');
+                saveTasks();
+                editing = false;
+                $task.find('.delete-btn').show(); // Show the delete button again
+            }
+        });
+
+        input.blur(function() {
+            var newText = input.val();
+            input.replaceWith('<span>' + newText + '</span>');
             saveTasks();
             editing = false;
             $task.find('.delete-btn').show(); // Show the delete button again
         });
-    
-        editableSpan.on('keypress', function(e) {
-            if (e.which === 13) { // Enter key
-                e.preventDefault(); // Prevent new line in contenteditable
-                editableSpan.blur();
-            }
-        });
     }
-    
-    
-    
 
     function deleteTask($task) {
         $task.remove();
