@@ -165,7 +165,7 @@ $(document).ready(function() {
             $.each(storedTasks, function(index, task) {
                 var taskHtml = '<li class="todo-item">' +
                     '<span>' + task.trim() + '</span>' +
-                    '<button class="delete-btn btn btn-danger btn-sm">Delet</button>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
