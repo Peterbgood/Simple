@@ -82,14 +82,13 @@ $(document).ready(function() {
 
     function editTask($task) {
         var taskText = $task.find('span').text();
-        var input = $('<input type="text" class="form-control" value="' + taskText + '">');
-        var $span = $('<span></span>').append(input);
-    
+        var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
+        
         // Temporarily hide the delete button
         $task.find('.delete-btn').hide();
     
         // Replace the span with input
-        $task.find('span').replaceWith($span);
+        $task.find('span').replaceWith(input);
     
         // Blur the current active element
         if (document.activeElement) {
@@ -97,8 +96,7 @@ $(document).ready(function() {
         }
     
         setTimeout(function() {
-            // Focus the input after detaching and reattaching it
-            $span.find('input').focus().click().select();
+            input.attr('autofocus', true).focus().click().select();
         }, 100);
     
         editing = true;
@@ -106,7 +104,7 @@ $(document).ready(function() {
         input.on('keypress', function(e) {
             if (e.which === 13) { // Enter key
                 var newText = input.val();
-                $span.replaceWith('<span>' + newText + '</span>');
+                input.replaceWith('<span>' + newText + '</span>');
                 saveTasks();
                 editing = false;
                 $task.find('.delete-btn').show(); // Show the delete button again
@@ -115,7 +113,7 @@ $(document).ready(function() {
     
         input.blur(function() {
             var newText = input.val();
-            $span.replaceWith('<span>' + newText + '</span>');
+            input.replaceWith('<span>' + newText + '</span>');
             saveTasks();
             editing = false;
             $task.find('.delete-btn').show(); // Show the delete button again
@@ -162,7 +160,7 @@ $(document).ready(function() {
             $.each(storedTasks, function(index, task) {
                 var taskHtml = '<li class="todo-item">' +
                     '<span>' + task.trim() + '</span>' +
-                    '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Delet</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
