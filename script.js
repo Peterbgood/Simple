@@ -85,19 +85,25 @@ $(document).ready(function() {
         var input = $('<input type="text" class="form-control" value="' + taskText + '">');
         $task.find('span').replaceWith(input);
         input.focus();
+        setTimeout(function() {
+            input.focus(); // Ensure focus and keyboard visibility
+        }, 100);
         editing = true;
         input.on('keypress', function(e) {
-            if (e.which === 13) { 
+            if (e.which === 13) {
                 var newText = input.val();
                 $task.find('input').replaceWith('<span>' + newText + '</span>');
                 saveTasks();
                 editing = false;
-                input.off('keypress'); 
+                input.off('keypress');
             }
         });
-        input.focus(); // Add focus here
         input.blur(function() {
-            // Removed blur event to prevent saving on click outside
+            var newText = input.val();
+            $task.find('input').replaceWith('<span>' + newText + '</span>');
+            saveTasks();
+            editing = false;
+            input.off('blur');
         });
     }
 
