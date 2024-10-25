@@ -87,16 +87,17 @@ $(document).ready(function() {
         input.focus();
         editing = true;
         input.on('keypress', function(e) {
-            if (e.which === 13) { // Enter key
+            if (e.which === 13) { 
                 var newText = input.val();
                 $task.find('input').replaceWith('<span>' + newText + '</span>');
                 saveTasks();
                 editing = false;
-                input.off('keypress'); // Remove event listener
+                input.off('keypress'); 
             }
         });
+        input.focus(); // Add focus here
         input.blur(function() {
-            // Remove blur event to prevent saving on click outside
+            // Removed blur event to prevent saving on click outside
         });
     }
 
