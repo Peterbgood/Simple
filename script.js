@@ -4,6 +4,7 @@ $(document).ready(function() {
     var holdTimeout;
     var startTime;
     var longPress = 500; // 0.5 seconds
+    var editing = false;
 
     // Add task on enter key press
     $('#todo-input').keypress(function(e) {
@@ -15,12 +16,12 @@ $(document).ready(function() {
     // Add task on button click
     $('#add-btn').click(addTask);
 
-    // Delete task on long press
+    // Edit task on long press
     $(document).on('touchstart mousedown', '.todo-item', function(e) {
         var $this = $(this);
         startTime = new Date().getTime();
         holdTimeout = setTimeout(function() {
-            deleteTask($this);
+            editTask($this);
         }, longPress);
         e.preventDefault(); // Prevent text selection
     });
@@ -40,6 +41,13 @@ $(document).ready(function() {
     // Move task up on double tap
     $(document).on('dblclick', '.todo-item', function() {
         moveTaskUp($(this));
+    });
+
+    // Delete task on delete button click
+    $(document).on('click', '.delete-btn', function(e) {
+        e.stopPropagation(); // Prevent editTask from triggering
+        var $task = $(this).closest('.todo-item');
+        deleteTask($task);
     });
 
     // Reset all tasks
@@ -62,13 +70,51 @@ $(document).ready(function() {
     function addTask() {
         var task = $('#todo-input').val();
         if (task !== '') {
-            var taskHtml = '<li class="todo-item">' + 
-                '<span>' + task.trim() + '</span>' + 
+            var taskHtml = '<li class="todo-item">' +
+                '<span>' + task.trim() + '</span>' +
+                '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
             '</li>';
             $('#todo-list').append(taskHtml);
             $('#todo-input').val('');
             saveTasks();
         }
+    }
+
+    function editTask($task) {
+        var taskText = $task.find('span').text();
+        var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
+        $task.find('span').replaceWith(input);
+
+        if (document.activeElement) {
+            $(document.activeElement).blur();
+        }
+
+        setTimeout(function() {
+            input.attr('autofocus', true);
+            input.focus();
+            input.click(); // Force keyboard display
+            input.select(); // Select text for easier editing
+        }, 100);
+
+        editing = true;
+
+        input.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                var newText = input.val();
+                input.replaceWith('<span>' + newText + '</span>');
+                saveTasks();
+                editing = false;
+                input.off('keypress');
+            }
+        });
+
+        input.blur(function() {
+            var newText = input.val();
+            input.replaceWith('<span>' + newText + '</span>');
+            saveTasks();
+            editing = false;
+            input.off('blur');
+        });
     }
 
     function deleteTask($task) {
@@ -77,8 +123,10 @@ $(document).ready(function() {
     }
 
     function moveTaskUp($task) {
-        $task.prev().before($task.get());
-        saveTasks();
+        if (!editing) {
+            $task.prev().before($task.get());
+            saveTasks();
+        }
     }
 
     function resetTasks() {
@@ -105,8 +153,9 @@ $(document).ready(function() {
         var storedTasks = JSON.parse(localStorage.getItem('tasks'));
         if (storedTasks) {
             $.each(storedTasks, function(index, task) {
-                var taskHtml = '<li class="todo-item">' + 
-                    '<span>' + task.trim() + '</span>' + 
+                var taskHtml = '<li class="todo-item">' +
+                    '<span>' + task.trim() + '</span>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
