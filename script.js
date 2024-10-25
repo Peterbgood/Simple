@@ -95,10 +95,12 @@ $(document).ready(function() {
             $(document.activeElement).blur();
         }
     
+        // Force focus with a slight delay to ensure it's rendered properly
         setTimeout(function() {
-            input.attr('autofocus', true).focus().click().select();
-            input.focus();
-            input.trigger('focus'); // Explicitly trigger the focus event
+            input.attr('autofocus', true);
+            input[0].focus();
+            input[0].click(); // Simulate a click to force keyboard display
+            input[0].setSelectionRange(0, input.val().length); // Select text for easier editing
         }, 100);
     
         editing = true;
@@ -121,6 +123,7 @@ $(document).ready(function() {
             $task.find('.delete-btn').show(); // Show the delete button again
         });
     }
+    
     
     
 
