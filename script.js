@@ -86,7 +86,8 @@ $(document).ready(function() {
         $task.find('span').replaceWith(input);
         input.focus();
         setTimeout(function() {
-            input.focus(); // Ensure focus and keyboard visibility
+            input.focus();
+            document.body.click(); // Force keyboard display
         }, 100);
         editing = true;
         input.on('keypress', function(e) {
