@@ -84,16 +84,17 @@ $(document).ready(function() {
         var taskText = $task.find('span').text();
         var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
         $task.find('span').replaceWith(input);
+        input.focus();
         setTimeout(function() {
-            input[0].focus(); // Force focus on input
-            input[0].click();  // Simulate click for keyboard display
-            input[0].select(); // Select text for easier editing
+            input.focus();
+            input.click(); // Force keyboard display
+            input.select(); // Select text for easier editing
         }, 100);
         editing = true;
         input.on('keypress', function(e) {
-            if (e.which === 13) {
+            if (e.which === 13) { // Enter key
                 var newText = input.val();
-                $task.find('input').replaceWith('<span>' + newText + '</span>');
+                input.replaceWith('<span>' + newText + '</span>');
                 saveTasks();
                 editing = false;
                 input.off('keypress');
@@ -101,7 +102,7 @@ $(document).ready(function() {
         });
         input.blur(function() {
             var newText = input.val();
-            $task.find('input').replaceWith('<span>' + newText + '</span>');
+            input.replaceWith('<span>' + newText + '</span>');
             saveTasks();
             editing = false;
             input.off('blur');
