@@ -83,44 +83,45 @@ $(document).ready(function() {
     function editTask($task) {
         var taskText = $task.find('span').text();
         var input = $('<input type="text" class="form-control" value="' + taskText + '">');
+        var $span = $('<span></span>').append(input);
     
-        // Temporarily detach the input to avoid autofocus issues
-        $task.find('span').replaceWith(input);
-        var detachedInput = input.detach();
-        
+        // Temporarily hide the delete button
+        $task.find('.delete-btn').hide();
+    
+        // Replace the span with input
+        $task.find('span').replaceWith($span);
+    
+        // Blur the current active element
         if (document.activeElement) {
             $(document.activeElement).blur();
         }
     
         setTimeout(function() {
-            // Reattach and focus the input
-            $task.append(detachedInput);
-            detachedInput.attr('autofocus', true);
-            detachedInput.focus();
-            detachedInput.click();
-            detachedInput.select();
+            // Focus the input after detaching and reattaching it
+            $span.find('input').focus().click().select();
         }, 100);
     
         editing = true;
     
-        detachedInput.on('keypress', function(e) {
+        input.on('keypress', function(e) {
             if (e.which === 13) { // Enter key
-                var newText = detachedInput.val();
-                detachedInput.replaceWith('<span>' + newText + '</span>');
+                var newText = input.val();
+                $span.replaceWith('<span>' + newText + '</span>');
                 saveTasks();
                 editing = false;
-                detachedInput.off('keypress');
+                $task.find('.delete-btn').show(); // Show the delete button again
             }
         });
     
-        detachedInput.blur(function() {
-            var newText = detachedInput.val();
-            detachedInput.replaceWith('<span>' + newText + '</span>');
+        input.blur(function() {
+            var newText = input.val();
+            $span.replaceWith('<span>' + newText + '</span>');
             saveTasks();
             editing = false;
-            detachedInput.off('blur');
+            $task.find('.delete-btn').show(); // Show the delete button again
         });
     }
+    
     
 
     function deleteTask($task) {
@@ -161,7 +162,7 @@ $(document).ready(function() {
             $.each(storedTasks, function(index, task) {
                 var taskHtml = '<li class="todo-item">' +
                     '<span>' + task.trim() + '</span>' +
-                    '<button class="delete-btn btn btn-danger btn-sm">Delet</button>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
