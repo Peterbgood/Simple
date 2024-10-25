@@ -1,8 +1,6 @@
 $(document).ready(function() {
     loadTasks();
     loadHeading();
-    var startTime;
-    var longPress = 500; // 0.5 seconds
     var editing = false;
 
     // Add task on enter key press
@@ -16,22 +14,10 @@ $(document).ready(function() {
     $('#add-btn').click(addTask);
 
     // Edit task on tap
-    $(document).on('touchstart mousedown', '.todo-item', function(e) {
+    $(document).on('click', '.todo-item', function(e) {
         var $this = $(this);
-        startTime = new Date().getTime();
-        setTimeout(function() {
-            if (!editing) {
-                editTask($this);
-            }
-        }, longPress);
-        e.preventDefault(); // Prevent text selection
-    });
-
-    $(document).on('touchend mouseup', function() {
-        var endTime = new Date().getTime();
-        var holdTime = endTime - startTime;
-        if (holdTime < longPress) {
-            clearTimeout(editing);
+        if (!editing) {
+            editTask($this);
         }
     });
 
@@ -81,39 +67,31 @@ $(document).ready(function() {
 
     function editTask($task) {
         var taskText = $task.find('span').text();
-        var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
-        $task.find('span').replaceWith(input);
+        var editableSpan = $('<span contenteditable="true" class="form-control">' + taskText + '</span>');
 
         // Temporarily hide the delete button
         $task.find('.delete-btn').hide();
 
-        // Blur the current active element
-        if (document.activeElement) {
-            $(document.activeElement).blur();
-        }
+        // Replace the span with an editable span
+        $task.find('span').replaceWith(editableSpan);
 
-        setTimeout(function() {
-            input.attr('autofocus', true).focus().click().select();
-        }, 100);
-
+        editableSpan.focus();
+        editableSpan.click(); // Trigger click to force keyboard display
         editing = true;
 
-        input.on('keypress', function(e) {
-            if (e.which === 13) { // Enter key
-                var newText = input.val();
-                input.replaceWith('<span>' + newText + '</span>');
-                saveTasks();
-                editing = false;
-                $task.find('.delete-btn').show(); // Show the delete button again
-            }
-        });
-
-        input.blur(function() {
-            var newText = input.val();
-            input.replaceWith('<span>' + newText + '</span>');
+        editableSpan.on('blur', function() {
+            var newText = editableSpan.text();
+            editableSpan.replaceWith('<span>' + newText + '</span>');
             saveTasks();
             editing = false;
             $task.find('.delete-btn').show(); // Show the delete button again
+        });
+
+        editableSpan.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                e.preventDefault(); // Prevent new line in contenteditable
+                editableSpan.blur();
+            }
         });
     }
 
@@ -155,7 +133,7 @@ $(document).ready(function() {
             $.each(storedTasks, function(index, task) {
                 var taskHtml = '<li class="todo-item">' +
                     '<span>' + task.trim() + '</span>' +
-                    '<button class="delete-btn btn btn-danger btn-sm">Delet</button>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Del</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
