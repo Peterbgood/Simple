@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     function editTask($task) {
         var taskText = $task.find('span').text();
-        var input = $('<input type="text" class="form-control" value="' + taskText + '" autofocus>');
+        var input = $('<input type="text" class="form-control" value="' + taskText + '">');
         
         // Temporarily hide the delete button
         $task.find('.delete-btn').hide();
@@ -96,13 +96,9 @@ $(document).ready(function() {
         }
     
         setTimeout(function() {
-            input.attr('autofocus', true);
-    
-            // Forcing focus using plain JavaScript
-            var element = input[0];
-            element.focus();
-            element.click(); // Simulate a click to force keyboard display
-            element.setSelectionRange(0, element.value.length); // Select text for easier editing
+            input.attr('autofocus', true).focus().click().select();
+            input.focus();
+            input.trigger('focus'); // Explicitly trigger the focus event
         }, 100);
     
         editing = true;
@@ -166,7 +162,7 @@ $(document).ready(function() {
             $.each(storedTasks, function(index, task) {
                 var taskHtml = '<li class="todo-item">' +
                     '<span>' + task.trim() + '</span>' +
-                    '<button class="delete-btn btn btn-danger btn-sm">Delete</button>' +
+                    '<button class="delete-btn btn btn-danger btn-sm">Delet</button>' +
                 '</li>';
                 $('#todo-list').append(taskHtml);
             });
