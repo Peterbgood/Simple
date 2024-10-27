@@ -22,10 +22,10 @@ body {
     align-items: center;
     background-color: #333;
     color: white;
-    border: 1px solid white;
+    border: 1px solid #dc3545;
     border-radius: 5px;
-    margin: 10px 0;
-    padding: 8px 20px;
+    margin: 5px 0;
+    padding: 0px 20px;
     box-shadow: none;
     user-select: none;
     font-size: 18px !important;
@@ -41,8 +41,8 @@ body {
   }
   
   .todo-item:hover {
-    background-color: #141414;
-    border-color: white;
+    background-color: #333;
+    border-color: #dc3545;
   }
   
   .todo-list {
