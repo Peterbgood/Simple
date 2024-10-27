@@ -1,11 +1,15 @@
 body {
     background: black;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700 !important;
   }
   
   h1 {
     background-color: black !important;
     color: white !important;
-    font-weight: 600 !important;
+    
+    font-weight: 700 !important;
+    font-size: 24px !important;
   }
   
   h1.form-control {
@@ -16,7 +20,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
+    background-color: #333;
     color: white;
     border: 1px solid white;
     border-radius: 5px;
@@ -24,6 +28,8 @@ body {
     padding: 8px 20px;
     box-shadow: none;
     user-select: none;
+    font-size: 18px !important;
+    font-weight: 700 !important;
   }
   
   .todo-item span {
