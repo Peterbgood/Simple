@@ -5,6 +5,11 @@ background: black;
 }
 
 
+h1 {
+    background-color: black !important;
+    color: white !important;
+  }
+
 .todo-list {
     padding: 10px;
 }
