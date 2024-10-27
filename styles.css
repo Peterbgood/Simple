@@ -92,3 +92,7 @@ body {
     -ms-user-select: none;
     -moz-user-select: none;
   }
+
+  #todo-input {
+    width: 100%;
+}
