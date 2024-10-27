@@ -1,129 +1,81 @@
 body {
-
-background: black;
-
-}
-
-
-h1 {
+    background: black;
+  }
+  
+  h1 {
     background-color: black !important;
     color: white !important;
+    font-weight: 600 !important;
   }
-
-.todo-list {
-    padding: 10px;
-}
-
-
-
-h1.form-control {
-
-  border: none;  
-}
-
-.todo-item span {
+  
+  h1.form-control {
+    border: none;
+  }
+  
+  .todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 8px 20px;
+    box-shadow: none;
+    user-select: none;
+  }
+  
+  .todo-item span {
     flex-grow: 1;
     display: inline-block;
     width: 100%;
     padding: 5px;
     box-sizing: border-box;
-}
-
-
-
-h1 {
-
-    font-weight: 600 !important;
-}
-
-.todo-item {
-    display: block;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px 0;
-    padding: 8px 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-}
-
-/* Default styles */
-.todo-list {
+  }
+  
+  .todo-item:hover {
+    background-color: #141414;
+    border-color: white;
+  }
+  
+  .todo-list {
+    padding: 10px;
     max-width: 600px;
     margin: 40px auto;
-    
- 
     padding: 20px;
-   
-}
-
-/* Mobile-specific styles */
-@media only screen and (max-width: 768px) {
+  }
+  
+  @media only screen and (max-width: 768px) {
     .todo-list {
-        margin: 20px 5px !important; /* Add 5px margin on left/right */
+      margin: 20px 5px !important;
     }
-}
-
-
-.todo-item:hover {
-    background-color: #f2f2f2;
-}
-
-#reset-btn {
-    background-color: #dc3545; /* Tan color */
-    color: #fff; /* Dark text color */
-    border: none; /* Remove default border */
-   
-    cursor: pointer; /* Pointer cursor */
-}
-
-#add-btn {
-    background-color: #007bff; /* Tan color */
-    color: #fff; /* Dark text color */
-    border: none; /* Remove default border */
-   
-    cursor: pointer; /* Pointer cursor */
-}
-
-.todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.todo-item span {
-    flex-grow: 1;
-}
-
-
-#reset-btn:hover {
-    background-color: #e93f50; /* Lighter tan on hover */
-}
-
-#add-btn:hover {
-    background-color: #1a81f0; /* Tan color */
-    color: #fff; /* Dark text color */
-    border: none; /* Remove default border */
-   
-    cursor: pointer; /* Pointer cursor */
-}
-
-
-
-/* Make reset button full width */
-#reset-btn {
+  }
+  
+  #reset-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
     width: 100%;
-}
-
-/* Align buttons */
-.btn-group {
+  }
+  
+  #reset-btn:hover {
+    background-color: #e93f50;
+  }
+  
+  #add-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #add-btn:hover {
+    background-color: #1a81f0;
+  }
+  
+  .btn-group {
     display: flex;
     gap: 10px;
-}
-
-.todo-item {
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-}
+  }
