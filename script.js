@@ -114,5 +114,11 @@ $(document).ready(function() {
     }
 
     // Call saveHeading whenever the h1 content changes
-    $('h1').on('input', saveHeading);
+    $('h1').on('keypress', function(e) {
+        if (e.which === 13) { 
+          saveHeading();
+          $('#todo-input').focus();
+          e.preventDefault(); 
+        }
+      });
 });
