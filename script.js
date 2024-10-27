@@ -121,4 +121,5 @@ $(document).ready(function() {
           e.preventDefault(); 
         }
       });
+      $('#todo-input').focus();
 });
